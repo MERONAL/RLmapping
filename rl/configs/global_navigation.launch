@@ -1,0 +1,21 @@
+<launch>
+    <arg name="planning" default="false"/>
+    <arg name="world" default="$(find amr_robots_gazebo)/gazebo_worlds/simple5.world"/> 
+    <arg name="mapping" default="false"/>
+
+    <include file="$(find amr_robots_gazebo)/gazebo_launch/example-pioneer3at-ampt.launch">
+        <arg name="mapping" value="$(arg mapping)"/>
+        <arg name="world" value="$(arg world)"/>
+    </include>
+    <node pkg="gmapping" type="slam_gmapping" name="gmapping" output="screen" >
+        <remap from="scan" to="/scan"/>
+        <remap from="base_link" to="/base_link"/>
+        <remap from="odom" to="/odom"/>
+    </node>
+    <node pkg="joy" type="joy_node" name="joy_node" output="screen" />
+    <node pkg="amr_robots_gazebo" type="control_joy.py" name="control_joy" output="screen" />
+    <node pkg="rviz" type="rviz" name="rviz_display" output="screen" args="-d $(find rl)/configs/control_with_map.rviz" />
+    <group if="$(arg planning)">
+        <node name="planning" pkg="amr_robots_gazebo" type="new_planning.py"  output="log" respawn="false" respawn_delay="0"/>
+    </group>
+</launch>

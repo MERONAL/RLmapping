@@ -1,0 +1,27 @@
+<launch>  
+
+    <arg name="world" default="$(find amr_robots_gazebo)/gazebo_worlds/simple5.world"/> 
+    <arg name="mapping" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+  <include file="$(find amr_robots_gazebo)/gazebo_launch/example-pioneer3at-ampt.launch">
+    <arg name="mapping" value="$(arg mapping)"/>
+    <arg name="world" value="$(arg world)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find rl)/configs/maps/simple5.yaml" />
+  <!-- <node pkg="tf" type="static_transform_publisher" name="odom_map_broadcaster" args="0 0 0 0 0 0 /map /odom 100" />   -->
+  <include file="$(find rl)/configs/amcl.launch" />
+  <node pkg="joy" type="joy_node" name="joy_node" output="screen" />
+  <node pkg="amr_robots_gazebo" type="control_joy.py" name="control_joy" output="screen" />
+  <node pkg="rviz" type="rviz" name="rviz_display" output="screen" args="-d $(find rl)/configs/others/traditional_navigation_rviz.rviz" />
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <param name="controller_frequency" value="10.0"/>
+    <rosparam file="$(find rl)/configs/others/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rl)/configs/others/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rl)/configs/others/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rl)/configs/others/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rl)/configs/others/trajectory_planner.yaml" command="load" />
+    <remap from="cmd_vel" to="/sim_p3at/cmd_vel"/>
+  </node>
+</launch>
+ 

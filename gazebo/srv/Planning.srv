@@ -1,0 +1,7 @@
+# global target requests
+float64 x
+float64 y
+---
+# local target response
+float64 x
+float64 y

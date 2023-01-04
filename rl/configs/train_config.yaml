@@ -1,0 +1,7 @@
+
+scene_config_path: "rl/configs/scenes/gazebo_scenes_config.yaml"
+scene_name: "simple5"
+
+gazebo: 
+  launch_file_path: "gazebo/gazebo_launch/example-pioneer3at-ampt.launch"
+  world_file_path: "gazebo/gazebo_worlds/{}.world"

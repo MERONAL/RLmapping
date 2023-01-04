@@ -1,0 +1,63 @@
+obstacle_info:
+  obstacle_radius: 0.5 # 圆柱的半径为0.5米
+
+robot:
+  robot_size: 0.3 # 机器车的半径为0.3米
+
+hyper_parameter:
+  collision_threshold: 0.08 # 0.08
+
+scene:
+  complex1:
+    dynamic: false
+    static_obstacle: [[-7.5, -7.5], [-4.5, -6.5], [-6.5, -3.5],[-2.5, -3.5],[-1.5, -7.5],[1.5,  -5.5],[3.5,  -2.5],[6.5,  -5.5],[3.5,   1.5],[3.5, 5.5],[-7.5, 6.5],[-5.5, 3.5],[-2.5, 6.5],[-2.5,3.5],[-5.5, -0.5],[6.5, 7.5],[7.0, 3.0],[-7.0, 1.5],[-2.5, 0.5],[-2.5, -1.5],[-2.5, -0.5]]
+    walls: [-9.5, 9.5, 9.5, -9.5] #左，右，上，下
+    
+
+  simple5:
+    dynamic: false
+    static_obstacle: [[3.5, 0.5],[0, 2],[2, 2],[6, 1],[0, 4],[5, 3],[2, 5],[4, 5],[6, 6],[3, 7],[0, 7]]
+    walls: [-1.76, 7.8, 8.28, -1.3] #左，右，上，下
+  
+  dynamic_local:
+    dynamic: true
+    static_obstacle: [[0.000002, 6.999998],[6.000002, 5.999998],[0.000002, 1.999998],[5.500002, 0.499998],[2.5, 1.5],[2.5, 6.5]]
+    walls: [-1.76, 7.8, 8.15, -1.3]
+    dynamic_obstacles: 
+      ROS_TOPIC_FREQUENCY: 10
+      obstacles: [
+        {
+          obstacle_name: "unit_cylinder_1",
+          start_pos: [-1, 5], # 动态障碍物运动起点坐标
+          end_pos: [4, 5], # 动态障碍物运动终点坐标
+          min_velocity: 0.05, #0.1
+          max_velocity: 0.10, #0.2
+        },
+        {
+          obstacle_name: "unit_cylinder_4",
+          start_pos: [2, 3], # 动态障碍物运动起点坐标
+          end_pos: [6, 3], # 动态障碍物运动终点坐标
+          min_velocity: 0.1,
+          max_velocity: 0.15,
+        }
+      ]
+
+  ampt_actloc:
+    dynamic: false
+    static_obstacle: []
+    walls: []
+  
+  mini_world:
+    dynamic: false
+    static_obstacle: [[1.3, -1.7], [-1.15, -1.5], [-1.2, 1.4], [1.5,1.65]]
+    walls: [-3.5, 3.5, 3.5, -3.5]
+  
+  simple:
+    dynamic: false
+    static_obstacle: [[0.9856, 2.0011], [5.9754,1.0964], [3.2766, 3.8627], [0.0333, 6.0479],[6.0171, 6.0336]]
+    walls: [-1.76, 7.8, 8.28, -1.3]
+  
+  simple2:
+    dynamic: false
+    static_obstacle: [[0., 2.0], [0., 7.0], [2.0, 5.0],[5.5, 0.5],[5.0, 3.0],[6.0, 6.0]]
+    walls: [-1.76, 7.8, 8.28, -1.3]
